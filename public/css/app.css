@@ -1,0 +1,49 @@
+.main-div {
+    padding-top: 100px;
+}
+
+form>div{
+    margin:  auto;
+}
+
+.register-text{
+    text-align: center;
+}
+
+.sign-up-btn{
+    text-align: end;
+}
+
+.sign-up-btn>button{
+    font-weight: bold;
+}
+
+body{
+    background-color: #edf2f7;
+}
+
+.main-div{
+    padding-top: 10px;
+}
+
+.head{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #cbd5e0;
+}
+
+#new-room-modal{
+    padding: 5px;
+    margin-top: 5px;
+    border: 3px solid #edf2f7;
+    text-align: end;
+}
+
+.new-room-price{
+    margin-bottom: 5px;
+}
+
+.my-booking{
+    background-color: darkseagreen;
+}
