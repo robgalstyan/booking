@@ -46,7 +46,7 @@ class BookingService
 
         return $this->bookingModel->with('room')
             ->where('user_id',Auth::user()->id)
-            ->get();
+            ->paginate(10);
     }
 
 
