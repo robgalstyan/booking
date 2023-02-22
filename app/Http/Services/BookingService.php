@@ -101,18 +101,14 @@ class BookingService
 
         return $this->bookingModel->where('room_id', '=', $roomID)
             ->where(function($query) use ($bookStartDate, $bookEndDate){
-                $query->where(function ($bookings) use ($bookStartDate, $bookEndDate){
-                    $bookings->where('book_start', '>=', Carbon::parse($bookStartDate))
-                        ->where('book_start', '<=', Carbon::parse($bookEndDate));
-                    })
-                    ->orWhere(function ($bookings) use ($bookStartDate, $bookEndDate){
-                        $bookings->where('book_end', '>=', Carbon::parse($bookStartDate))
-                            ->where('book_end', '<=', Carbon::parse($bookEndDate));
-                    })
-                    ->orWhere(function ($bookings) use ($bookStartDate, $bookEndDate){
-                        $bookings->where('book_start', '<=', Carbon::parse($bookStartDate))
-                            ->where('book_end', '>=', Carbon::parse($bookEndDate));
-                    });
+                $query->where(function ($bookingsQuery) use($bookStartDate, $bookEndDate){
+                    $bookingsQuery->whereBetween('book_start', [$bookStartDate, $bookEndDate])
+                        ->orWhereBetween('book_end', [$bookStartDate, $bookEndDate])
+                        ->orWhere(function ($bookingsQuery) use($bookStartDate, $bookEndDate){
+                            $bookingsQuery->where('book_start', '<=', $bookStartDate)
+                                ->where('book_end', '>=', $bookEndDate);
+                        });
+                });
             })
             ->exists();
     }

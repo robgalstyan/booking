@@ -53,17 +53,13 @@ class RoomService
                 'bookings.guest',
                 'bookings' => function($bookings) use($bookStartDate, $bookEndDate){
                     $bookings->where(function ($bookingsQuery) use($bookStartDate, $bookEndDate){
-                        $bookingsQuery->where('book_start', '>=', $bookStartDate)
-                            ->where('book_start', '<=', $bookEndDate);
-                        })
-                        ->orWhere(function ($bookingsQuery) use($bookStartDate, $bookEndDate){
-                            $bookingsQuery->where('book_end', '>=', $bookStartDate)
-                                ->where('book_end', '<=', $bookEndDate);
-                        })
-                        ->orWhere(function ($bookingsQuery) use($bookStartDate, $bookEndDate){
-                            $bookingsQuery->where('book_start', '<=', $bookStartDate)
-                                ->where('book_end', '>=', $bookEndDate);
-                        });
+                        $bookingsQuery->whereBetween('book_start', [$bookStartDate, $bookEndDate])
+                            ->orWhereBetween('book_end', [$bookStartDate, $bookEndDate])
+                            ->orWhere(function ($bookingsQuery) use($bookStartDate, $bookEndDate){
+                                $bookingsQuery->where('book_start', '<=', $bookStartDate)
+                                    ->where('book_end', '>=', $bookEndDate);
+                            });
+                    });
                 }
             ]
         );
